@@ -4,9 +4,9 @@ pipeline {
     }
 
     environment {
-        my_aws_credentials = credential('aws-access')
+        my_aws_credentials = credentials('aws-access')
     }
-    
+
     tools {
         maven "maven"
     }
@@ -33,7 +33,8 @@ pipeline {
 
             post {
                 success {
-                    archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
+                    archiveArtifacts artifacts: '**/target/*.war',
+                                     fingerprint: true
                 }
             }
         }
