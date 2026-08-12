@@ -3,6 +3,10 @@ pipeline {
         label "worker"
     }
 
+    environment {
+        my_aws_credentials = credential('aws-access')
+    }
+    
     tools {
         maven "maven"
     }
@@ -11,7 +15,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/mayurpandit25/student-management.git'
+                git 'https://github.com/dnyaneshwar-dhas/student-management1.git'
 
                 sh '''
                     echo "Cloning is successful"
@@ -26,10 +30,20 @@ pipeline {
                     echo "Build is successful"
                 '''
             }
+
             post {
                 success {
                     archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
                 }
+            }
+        }
+
+        stage('Artifact to S3') {
+            steps {
+                sh '''
+                    aws s3 cp target/*.war s3://omkar.space/Artifacts/student.war
+                    echo "Artifact is uploaded to S3 successfully"
+                '''
             }
         }
     }
