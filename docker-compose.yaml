@@ -12,7 +12,8 @@ services:
     ports:
       - "3306:3306"
 
-#"If your service name is mysql, then you can also add mysql in the db.properties."
+
+ #"If your service name is mysql, then you can also add mysql in the db.properties."
 
   studentapp:
     build:
